@@ -6,7 +6,8 @@ src = cv2.imread('lenna.bmp', cv2.IMREAD_GRAYSCALE)
 
 
 # destination
-dst = cv2.add(src, 100)
+# dst = cv2.add(src, 100)     # 더하기 (밝게)
+dst = cv2.subtract(src, 100)    # 빼기 (어둡게)
 
 cv2.imshow('source', src)
 cv2.imshow('destination', dst)
