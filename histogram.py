@@ -23,11 +23,32 @@ def getGrayHistImage(h):
     return imgHist
 
 
-src = cv2.imread('lenna.bmp', cv2.IMREAD_GRAYSCALE)
-h = calcGrayHist(src)
+def histogram_stretching(src):
 
-cv2.imshow('Image', src)
-cv2.imshow('Histogram', getGrayHistImage(h))
+    Gmin = float(np.min(src))
+    Gmax = float(np.max(src))
+
+    dst = ((src - Gmin) / (Gmax - Gmin) * 255.).astype(np.uint8)
+
+    return dst
+
+
+src = cv2.imread('hawkes.bmp', cv2.IMREAD_GRAYSCALE)
+
+dst = histogram_stretching(src)
+
+dst2 = cv2.equalizeHist(src)
+
+h = calcGrayHist(src)
+h2 = calcGrayHist(dst)
+h3 = calcGrayHist(dst2)
+
+cv2.imshow('Org', src)
+cv2.imshow('Org Hist', getGrayHistImage(h))
+cv2.imshow('St', dst)
+cv2.imshow('St Hist', getGrayHistImage(h2))
+cv2.imshow('Eq', dst2)
+cv2.imshow('Eq Hist', getGrayHistImage(h3))
 cv2.waitKey()
 cv2.destroyAllWindows()
 
